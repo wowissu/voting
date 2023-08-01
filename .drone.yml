@@ -25,8 +25,8 @@ steps:
     - cd /drone/.ssh  
     # - ssh-keygen -f /drone/.ssh/id_rsa -t rsa -C "bbgbbg0123@gmail.com"
     - cat /drone/.ssh/id_rsa.pub
-    - ls -l ~/.ssh
-    - scp -P 22220 -i /drone/.ssh/id_rsa -r /drone/src opt@172.105.217.99:/home/opt/voting
+    - cat /etc/ssh/ssh_config
+    - scp -P 22220 -i /drone/.ssh/id_rsa -r /drone/src opt@172.105.217.99:/home/opt/voting 
 
 volumes:
 - name: voting
