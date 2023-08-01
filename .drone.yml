@@ -10,8 +10,8 @@ steps:
   - name: voting
     path: /drone/src/node_modules
   commands: 
-    # - npm install
-    # - npm run build
+    - npm install
+    - npm run build
   when: 
     branch: 
     - main
