@@ -17,10 +17,19 @@ steps:
     - main
 - name: upload-to-masa
   image: docker
+  volumes:
+  - name: ssh
+    path: /drone/.ssh
+  
   commands: 
-    - ssh --help
+    - cd /drone/.ssh  
+    - ssh-keygen -f /drone/.ssh/id_rsa -t rsa -C "bbgbbg0123@gmail.com"
+    # - scp -p 22220 opt@172.105.217.99 
 
 volumes:
 - name: voting
   host:
     path: /volume1/docker/voting/node_modules
+- name: ssh
+  host:
+    path: /volume1/docker/voting/ssh

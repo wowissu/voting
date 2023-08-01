@@ -2,8 +2,6 @@ import useSWR from 'swr'
 import { fetchWithToken, fetcher } from './api';
 import { Question } from '@/interfaces/data';
 
-// test
-
 export function useActiveQuestion (intervalTime = 2000) {
   const key = "getActiveQuestion";
   const context = useSWR(key, () => fetcher<{ question: Question, index: number, votingKey: string }>("/api/questions/active"), { refreshInterval: intervalTime });
