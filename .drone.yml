@@ -1,0 +1,15 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+- name: npm-build
+  privileged: true
+  image: node:18-alpine
+  commands: 
+    - npm install
+    - npm run build
+    - ssh --help
+  when: 
+    branch: 
+    - main
