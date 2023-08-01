@@ -27,7 +27,7 @@ steps:
     # - ssh-keygen -f /drone/.ssh/id_rsa -t rsa -C "bbgbbg0123@gmail.com"
     # - cat /drone/.ssh/id_rsa.pub
     - chmod 600 /drone/.ssh/id_rsa
-    - ssh -tt -i /drone/.ssh/id_rsa -F /drone/.ssh/ssh_config '/home/opt/remkdir_voting.sh'
+    - ssh -tt -i /drone/.ssh/id_rsa -F /drone/.ssh/ssh_config opt@172.105.217.99 '/home/opt/remkdir_voting.sh'
     - scp -P 22220 -i /drone/.ssh/id_rsa -F /drone/.ssh/ssh_config -r /drone/src/* /drone/src/.next opt@172.105.217.99:/home/opt/voting 
 
 volumes:
