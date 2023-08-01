@@ -25,9 +25,10 @@ steps:
     # - ssh-keygen -f /drone/.ssh/id_rsa -t rsa -C "bbgbbg0123@gmail.com"
     # - cat /drone/.ssh/id_rsa.pub
     - chmod 600 /drone/.ssh/id_rsa
-    - ssh -p 22220 -i /drone/.ssh/id_rsa -F /drone/.ssh/ssh_config opt@172.105.217.99 'rm -rf /home/opt/.next;'
+
+    - ssh -p 22220 -i /drone/.ssh/id_rsa -F /drone/.ssh/ssh_config opt@172.105.217.99 '/home/opt/prepare.sh'
     - scp -P 22220 -i /drone/.ssh/id_rsa -F /drone/.ssh/ssh_config -r /drone/src/.next opt@172.105.217.99:/home/opt 
-    - ssh -p 22220 -i /drone/.ssh/id_rsa -F /drone/.ssh/ssh_config opt@172.105.217.99 'next start --port 3333 &'
+    - ssh -p 22220 -i /drone/.ssh/id_rsa -F /drone/.ssh/ssh_config opt@172.105.217.99 'nohup next start --port 3333'
 
 volumes:
 - name: voting
