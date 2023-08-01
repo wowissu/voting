@@ -15,6 +15,10 @@ steps:
   when: 
     branch: 
     - main
+- name: upload-to-masa
+  image: docker
+  commands: 
+    - ssh --help
 
 volumes:
 - name: voting
