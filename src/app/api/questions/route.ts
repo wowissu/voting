@@ -1,6 +1,7 @@
 import { NextResponse as res } from 'next/server';
 import { verifyLoginTokenRequestGuard } from '@/utilities/token-server';
-import { getActiveQuestionIndex, getQuestions, getTemporaryData } from '@/utilities/syncData-server';
+import { getActiveQuestionIndex, getQuestions } from '@/utilities/data-server';
+import { commonErrorResponse } from '@/utilities/error';
 
 export async function GET(req: Request) {
   try {
@@ -8,13 +9,9 @@ export async function GET(req: Request) {
 
     return res.json({ success: true, data: {
       questions: getQuestions(),
-      activeIndex: getActiveQuestionIndex()
+      activeQuestionIndex: getActiveQuestionIndex()
     }})
   } catch (err: unknown) {
-    if (err instanceof Error) {
-      return res.json({ success: false, message: err.message }, { status: 498 });
-    }
-    
-    return res.json({ success: false }, { status: 498 });
+    return commonErrorResponse(err);
   }
 }

@@ -6,9 +6,11 @@ export interface Question {
   questionLabel: string;
   leftLabel: string;
   rightLabel: string;
-  leftVotes: number;
-  rightVotes: number;
+  votes: [number, number][];
 }
+
+export type VotingWill = 0 | 1 | 2;
+
 
 // export interface Cluster {
 //   label: string;

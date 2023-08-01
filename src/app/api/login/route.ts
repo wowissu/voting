@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
   if (password === "Aa123456") {
     // a corrected password, make a token
 
-    const token = encodeLoginToken();
+    const token = encodeLoginToken(24);
 
     return res.json({ token })
   }

@@ -1,7 +1,8 @@
 import { NextResponse as res } from 'next/server';
 import { verifyLoginTokenRequestGuard } from '@/utilities/token-server';
 import { Question } from '@/interfaces/data';
-import { addNewQuestion } from '@/utilities/syncData-server';
+import { addNewQuestion } from '@/utilities/data-server';
+import { commonErrorResponse } from '@/utilities/error';
 
 export async function POST(req: Request) {
   try {
@@ -13,8 +14,7 @@ export async function POST(req: Request) {
       questionLabel: postdata.questionLabel, 
       leftLabel: postdata.leftLabel, 
       rightLabel: postdata.rightLabel,
-      leftVotes: 0,
-      rightVotes: 0,
+      votes: []
     }    
 
     addNewQuestion(newQuestion);
@@ -22,10 +22,6 @@ export async function POST(req: Request) {
     return res.json({ success: true })
 
   } catch (err: unknown) {
-    if (err instanceof Error) {
-      return res.json({ success: false, message: err.message }, { status: 498 });
-    }
-    
-    return res.json({ success: false }, { status: 498 });
+    return commonErrorResponse(err);
   }
 }

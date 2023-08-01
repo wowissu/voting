@@ -1,6 +1,8 @@
 import { NextResponse as res } from 'next/server';
 import { verifyLoginTokenRequestGuard } from '@/utilities/token-server';
-import { setActiveQuestionIndex } from '@/utilities/syncData-server';
+import { setActiveQuestionIndex } from '@/utilities/data-server';
+import { restartVoting } from '@/utilities/voting-server';
+import { commonErrorResponse } from '@/utilities/error';
 
 export async function GET(req: Request, { params }: { params: { index: string } }) {
   try {
@@ -9,16 +11,13 @@ export async function GET(req: Request, { params }: { params: { index: string } 
     const index = parseInt(params.index)
 
     if (!isNaN(index)) {
+      restartVoting(index);
       setActiveQuestionIndex(index);
+      
+      return res.json({ success: true })
     }
-
-    return res.json({ success: true })
 
   } catch (err: unknown) {
-    if (err instanceof Error) {
-      return res.json({ success: false, message: err.message }, { status: 498 });
-    }
-    
-    return res.json({ success: false }, { status: 498 });
+    return commonErrorResponse(err);
   }
 }

@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { NextResponse } from 'next/server';
+import { headers } from 'next/headers';
 
 // const dateformat = "YYYY-MM-DDTHH:mm:ss"
 const key = "this-is-voting-project"
@@ -15,8 +15,7 @@ export function verifyLoginToken(token: string) {
 }
 
 export function verifyLoginTokenRequestGuard(req: Request) {
-  const requestHeaders = new Headers(req.headers)
-  const authorization = requestHeaders.get("Authorization") ?? "";
+  const authorization = headers().get("Authorization") ?? "";
   // a corrected password, make a authorization
   return verifyLoginToken(authorization)
 }
