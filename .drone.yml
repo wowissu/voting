@@ -10,8 +10,8 @@ steps:
   - name: voting
     path: /drone/src/node_modules
   commands: 
-    - npm install
-    - npm run build
+    # - npm install
+    # - npm run build
   when: 
     branch: 
     - main
@@ -23,8 +23,8 @@ steps:
   
   commands: 
     - cd /drone/.ssh  
-    - ssh-keygen -f /drone/.ssh/id_rsa -t rsa -C "bbgbbg0123@gmail.com"
-    # - scp -p 22220 opt@172.105.217.99 
+    # - ssh-keygen -f /drone/.ssh/id_rsa -t rsa -C "bbgbbg0123@gmail.com"
+    - scp -p 22220 -r /drone/src opt@172.105.217.99:/home/opt/voting
 
 volumes:
 - name: voting
