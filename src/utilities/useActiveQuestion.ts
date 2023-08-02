@@ -16,8 +16,6 @@ export function useActiveQuestion (config?: SWRConfiguration) {
 export function useActiveQuestionVotes (config?: SWRConfiguration) {
   const key = "useActiveQuestionVotes";
   const context = useSWR(key, fetchWithToken<{ currentLeftVotes: number, currentRightVotes: number, question: Question, activeQuestionIndex: number }>(resolveUrl("/api/questions/active/votes")), config);  
-
-  console.log(context.data)
   
   const currentLeftVotes = context.data?.data?.currentLeftVotes ?? 0
   const currentRightVotes = context.data?.data?.currentRightVotes ?? 0

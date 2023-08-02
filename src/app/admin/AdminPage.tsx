@@ -167,8 +167,8 @@ const AdminPage: FC = () => {
           <div className="p-4 space-y-4">
             <div className="flex justify-between">
               <div className="space-x-4">
-                <Button variant="contained" color="secondary" href={resolveUrl("/active")} target="_blank">跳到展示頁面</Button>
-                <Button variant="contained" color="secondary" href={votingUrl} target="_blank">打開投注頁面</Button>
+                <Button variant="contained" color="secondary" href={resolveUrl("/")} target="_blank">題目展示頁面</Button>
+                <Button variant="contained" color="secondary" href={votingUrl} target="_blank">投注頁面</Button>
               </div>
               <div>
               <Button variant="contained" color="error" onClick={() => votingContext.refresh()} >刷新 Voting token key</Button>
