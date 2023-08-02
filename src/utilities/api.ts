@@ -1,6 +1,7 @@
 import { Question } from '@/interfaces/data';
 import { getLoginToken } from './token-client';
 import { APIResponseData } from '@/interfaces/api';
+import { resolveUrl } from './resolveUrl';
 
 type Init = Parameters<typeof fetch>[1];
 
@@ -22,19 +23,19 @@ export function fetchWithToken<D = any>(...args: Parameters<typeof fetch>) {
 }
 
 export function addQuestion(q: Pick<Question, 'questionLabel' | 'leftLabel' | 'rightLabel'>, init?: Init) {
-  return fetchWithToken("/api/questions/add", { method: "POST", body: JSON.stringify(q) })()
+  return fetchWithToken(resolveUrl("/api/questions/add"), { method: "POST", body: JSON.stringify(q) })()
 }
 
 export function removeQuestion(index: number, init?: Init) {
-  return fetchWithToken(`/api/questions/remove?i=${index}`, init);
+  return fetchWithToken(resolveUrl(`/api/questions/remove?i=${index}`), init);
 }
 
 export function setActiveQuestion(index: number, init?: Init) {
-  return fetchWithToken(`/api/questions/active/${index}`, init)
+  return fetchWithToken(resolveUrl(`/api/questions/active/${index}`), init)
 }
 
 export function InactiveQuestion(qIndex: number, init?: Init) {
-  return fetchWithToken(`/api/questions/inactive/${qIndex}`)()
+  return fetchWithToken(resolveUrl(`/api/questions/inactive/${qIndex}`))()
 }
 
 const context = {

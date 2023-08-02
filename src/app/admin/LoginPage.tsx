@@ -1,16 +1,17 @@
 'use client';
+import { resolveUrl } from '@/utilities/resolveUrl';
 import { setLoginToken } from '@/utilities/token-client';
 import { Box, Button, TextField } from '@mui/material'
 import { ChangeEventHandler, FC, FormEventHandler, useCallback, useState } from 'react'
 
 const LoginPage: FC = () => {
   const [passwordInput, setPasswordInput] = useState("")
-
+  
   const doLogin = useCallback<FormEventHandler<HTMLFormElement>>(async (e) => {
     e.stopPropagation();
     e.preventDefault();
     
-    const res = await fetch("/api/login", { method: "POST", body: JSON.stringify({ password: passwordInput }) });
+    const res = await fetch(resolveUrl("/api/login"), { method: "POST", body: JSON.stringify({ password: passwordInput }) });
     const data = await res.json()
     
     setLoginToken(data.token);

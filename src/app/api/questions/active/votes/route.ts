@@ -1,6 +1,6 @@
 import { NextResponse as res } from 'next/server';
 import { verifyLoginTokenRequestGuard } from '@/utilities/token-server';
-import { getActiveQuestionIndex } from '@/utilities/data-server';
+import { getActiveQuestion, getActiveQuestionIndex } from '@/utilities/data-server';
 import { countNumberOfVotes } from '@/utilities/voting-server';
 import { commonErrorResponse } from '@/utilities/error';
 
@@ -9,12 +9,12 @@ export async function GET(req: Request) {
     verifyLoginTokenRequestGuard(req);
 
     const index = getActiveQuestionIndex();
-    
+    const question = getActiveQuestion();
 
     if (index !== null) {
       const [currentLeftVotes, currentRightVotes] = countNumberOfVotes(index);
       
-      return res.json({ success: true, data: { currentLeftVotes, currentRightVotes } })
+      return res.json({ success: true, data: { currentLeftVotes, currentRightVotes, question, activeQuestionIndex: index } })
 
       // const total = 200
       // const l = getRandomInt(total);

@@ -29,8 +29,15 @@ const QRcodePage: FC = () => {
   )
 }
 
-const QuestionPage: FC<{ question: Question, activeQuestionIndex: number }> = (props) => {
-  const [{ currentLeftVotes, currentRightVotes }] = useActiveQuestionVotes(500);
+const QuestionPage: FC<{
+  currentLeftVotes: number,
+  currentRightVotes: number,
+  activeQuestionIndex: number
+  question: Question,
+}> = (props) => {
+  // const [{ currentLeftVotes, currentRightVotes, question, activeQuestionIndex }] = useActiveQuestionVotes(500);
+
+  const { currentLeftVotes, currentRightVotes, question, activeQuestionIndex } = props;
 
   const previousLeftVotes = usePrevious(currentLeftVotes);
   const previousRightVotes = usePrevious(currentRightVotes);
@@ -46,16 +53,16 @@ const QuestionPage: FC<{ question: Question, activeQuestionIndex: number }> = (p
   return (
     <div className='h-screen flex flex-col items-stretch bg-white text-black'>
       <div className="text-[max(6vw,6vh)] px-4 text-center font-bold">
-        {props.question.questionLabel}
+        {question?.questionLabel}
       </div>
 
       <div className="flex flex-col justify-evenly w-full flex-1 relative voting-background">
         <div className="flex flex-nowrap text-[max(8vw,4vh)] font-bold text-white">
           <div className="flex-1 basis-1/2 flex items-center justify-center">
-            {props.question.leftLabel}
+            {question?.leftLabel}
           </div>
           <div className="flex-1 basis-1/2 flex items-center justify-center">
-            {props.question.rightLabel}
+            {question?.rightLabel}
           </div>
         </div>
         <div className="p-4">  
@@ -77,23 +84,27 @@ const QuestionPage: FC<{ question: Question, activeQuestionIndex: number }> = (p
             {currentRightVotesEasing}
           </div>
         </div>
-        <div className=' text-white text-[max(3vw,2vh)] font-bold justify-self-end self-center'>
-          ROUND {props.activeQuestionIndex + 1}
-        </div>
+        {activeQuestionIndex !== undefined && (
+          <div className=' text-white text-[max(3vw,2vh)] font-bold justify-self-end self-center'>
+            ROUND {activeQuestionIndex + 1}
+          </div>
+        )}
       </div>
     </div>
   )
 }
 
 export default function Page() {
-  const [{ question, activeQuestionIndex }, { isLoading }] = useActiveQuestion(2000)
+  const [{ currentLeftVotes, currentRightVotes, question, activeQuestionIndex }, { isLoading }] = useActiveQuestionVotes({ refreshInterval: 500 });
 
   return (
     <>
-      {isLoading ? <WaitingForStart /> : 
-      (question && (activeQuestionIndex !== undefined) 
-        ? <QuestionPage question={question} activeQuestionIndex={activeQuestionIndex} /> 
-        : <QRcodePage />)}
+      <div >
+        {isLoading ? <WaitingForStart /> : 
+        (question && (activeQuestionIndex !== undefined) 
+          ? <QuestionPage currentLeftVotes={currentLeftVotes} currentRightVotes={currentRightVotes} question={question} activeQuestionIndex={activeQuestionIndex} /> 
+          : <QRcodePage />)}
+      </div>
     </>
   )
 }

@@ -45,7 +45,7 @@ const VotingPage: FC<{ question: Question, activeQuestionIndex: number, votingKe
 }
 
 export default function Page({ params }: { params: { votingKey: string } }) {
-  const [{ question, activeQuestionIndex, votingKey }] = useActiveQuestion();
+  const [{ question, activeQuestionIndex, votingKey }] = useActiveQuestion({ refreshInterval: 1000 });
   const isActiveQuestion = votingKey === params.votingKey;
 
   return (

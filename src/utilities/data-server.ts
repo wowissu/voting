@@ -6,8 +6,8 @@ import path from 'path';
 export const dataJsonPath = path.join(process.cwd(), 'data.json');
 
 let temporaryData: JsonData = { questions: [] }
-let activeQuestionIndex: number | null = null;
-// let activeQuestionIndex: number | null = process.env.NODE_ENV === 'production' ? null : 0;
+// let activeQuestionIndex: number | null = null;
+let activeQuestionIndex: number | null = process.env.NODE_ENV === 'production' ? null : 0;
 
 fetchTemporaryData();
 

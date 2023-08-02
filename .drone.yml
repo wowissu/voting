@@ -27,7 +27,7 @@ steps:
     - chmod 600 /drone/.ssh/id_rsa
 
     - ssh -p 22220 -i /drone/.ssh/id_rsa -F /drone/.ssh/ssh_config opt@172.105.217.99 '/home/opt/prepare.sh'
-    - scp -P 22220 -i /drone/.ssh/id_rsa -F /drone/.ssh/ssh_config -r /drone/src/.next opt@172.105.217.99:/home/opt 
+    - scp -P 22220 -i /drone/.ssh/id_rsa -F /drone/.ssh/ssh_config -r /drone/src/.next/standalone opt@172.105.217.99:/home/opt
     - ssh -p 22220 -i /drone/.ssh/id_rsa -F /drone/.ssh/ssh_config opt@172.105.217.99 '/home/opt/start.sh;exit;'
 
 volumes:

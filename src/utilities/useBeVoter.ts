@@ -2,6 +2,7 @@ import useSWR from 'swr'
 import { fetcher } from './api';
 import { VotingWill } from '@/interfaces/data';
 import { useState } from 'react';
+import { resolveUrl } from './resolveUrl';
 
 const votingStorageToken = "voting_storage_token"
 
@@ -15,7 +16,7 @@ export default function useBeVoter (votingKey: string) {
 
   // register to a voter
   useSWR(key, () => {
-    return fetcher<string>('/api/voting/register', { method: "POST", body: JSON.stringify({ votingKey }), headers: { VotingAuthorization: getVotingToken() }}).then(res => {
+    return fetcher<string>(resolveUrl('/api/voting/register'), { method: "POST", body: JSON.stringify({ votingKey }), headers: { VotingAuthorization: getVotingToken() }}).then(res => {
       const { success, data: newVotingToken } = res;
 
       if (success && newVotingToken) {
@@ -31,7 +32,7 @@ export default function useBeVoter (votingKey: string) {
 
     setWill(will);
 
-    fetcher<string>('/api/voting', { method: "POST", body: JSON.stringify({ token: k, will: will, questionIndex }), headers: { VotingAuthorization: getVotingToken() } });
+    fetcher<string>(resolveUrl('/api/voting'), { method: "POST", body: JSON.stringify({ token: k, will: will, questionIndex }), headers: { VotingAuthorization: getVotingToken() } });
   }
 
   return {

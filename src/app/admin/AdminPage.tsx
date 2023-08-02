@@ -5,6 +5,7 @@ import { Box, Button, Modal, Paper, Skeleton, Table, TableBody, TableCell, Table
 import { useVotingUrl } from '@/utilities/useVoting';
 import { useDebounce } from 'usehooks-ts';
 import { useQuestions } from '@/utilities/useQuestion';
+import { resolveUrl } from '@/utilities/resolveUrl';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -166,7 +167,7 @@ const AdminPage: FC = () => {
           <div className="p-4 space-y-4">
             <div className="flex justify-between">
               <div className="space-x-4">
-                <Button variant="contained" color="secondary" href="/active" target="_blank">跳到展示頁面</Button>
+                <Button variant="contained" color="secondary" href={resolveUrl("/active")} target="_blank">跳到展示頁面</Button>
                 <Button variant="contained" color="secondary" href={votingUrl} target="_blank">打開投注頁面</Button>
               </div>
               <div>
