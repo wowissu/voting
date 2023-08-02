@@ -3,39 +3,34 @@ type: docker
 name: default
 
 steps:
-- name: npm-build
-  privileged: true
-  image: node:18-alpine
-  volumes:
-  - name: voting
-    path: /drone/src/node_modules
-  commands: 
-    - npm install
-    - npm run build
-    - mv .next/static .next/standalone
-    - ls -la .next/standalone
-    - du -sh .next/standalone
-  when: 
-    branch: 
-    - main
-- name: upload-to-masa
+# - name: npm-build
+#   privileged: true
+#   image: node:18-alpine
+#   volumes:
+#   - name: voting
+#     path: /drone/src/node_modules
+#   commands: 
+#     - npm install
+#     - npm run build
+#     - mv .next/static .next/standalone
+#     - ls -la .next/standalone
+#     - du -sh .next/standalone
+- name: send-command-to-masa
   image: docker
   volumes:
   - name: ssh
     path: /drone/.ssh
   commands: 
-    - cd /drone/.ssh  
-    # - ssh-keygen -f /drone/.ssh/id_rsa -t rsa -C "bbgbbg0123@gmail.com"
-    # - cat /drone/.ssh/id_rsa.pub
-    - chmod 600 /drone/.ssh/id_rsa
-    - ssh -p 22220 -i /drone/.ssh/id_rsa -F /drone/.ssh/ssh_config opt@172.105.217.99 '/home/opt/prepare.sh'
-    - scp -P 22220 -i /drone/.ssh/id_rsa -F /drone/.ssh/ssh_config -r /drone/src/.next/standalone opt@172.105.217.99:/home/opt
-    - ssh -p 22220 -i /drone/.ssh/id_rsa -F /drone/.ssh/ssh_config opt@172.105.217.99 '/home/opt/start.sh;exit;'
+    - ssh -p 22220 -i /drone/.ssh/id_rsa -F /drone/.ssh/ssh_config opt@172.105.217.99 '/home/opt/build.sh;/home/opt/start.sh;exit;'
+    # - ssh -p 22220 -i /drone/.ssh/id_rsa -F /drone/.ssh/ssh_config opt@172.105.217.99 '/home/opt/start.sh;exit;'
+  when: 
+    branch: 
+    - main
 
 volumes:
-- name: voting
-  host:
-    path: /volume1/docker/voting/node_modules
+# - name: voting
+#   host:
+#     path: /volume1/docker/voting/node_modules
 - name: ssh
   host:
     path: /volume1/docker/voting/ssh

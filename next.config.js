@@ -2,8 +2,7 @@ const { basePath } = require('./config')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath,
-  output: 'standalone'
+  basePath
 }
 
 module.exports = nextConfig
