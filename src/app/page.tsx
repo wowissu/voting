@@ -54,7 +54,7 @@ const QuestionPage: FC<{
 
   return (
     <>
-      <div className='h-screen flex flex-col items-stretch bg-white text-black'>
+      <div className='h-[100dvh] flex flex-col items-stretch bg-white text-black'>
         <div className="text-[max(6vw,6vh)] px-4 text-center font-bold">
           {question?.questionLabel}
         </div>
