@@ -15,7 +15,7 @@ steps:
 #     - mv .next/static .next/standalone
 #     - ls -la .next/standalone
 #     - du -sh .next/standalone
-- name: send-command-to-masa
+- name: trigger-remote-command
   image: docker
   volumes:
   - name: ssh

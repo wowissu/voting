@@ -3,11 +3,36 @@
 @tailwind utilities;
 
 body {
-  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-family: Impact, Roboto, Helvetica, Arial, sans-serif;
 }
-
 
 .voting-background {
   background: rgb(109,127,244);
   background: linear-gradient(90deg, rgba(109,127,244,1) 0%, rgba(74,100,244,1) 5%, rgba(33,63,216,1) 15%, rgba(15,45,187,1) 21%, rgba(5,30,152,1) 26%, rgba(2,22,131,1) 31%, rgba(7,21,124,1) 35%, rgba(9,20,114,1) 40%, rgba(18,18,105,1) 44%, rgba(45,13,83,1) 49%, rgba(63,9,64,1) 53%, rgba(79,7,48,1) 59%, rgba(96,5,36,1) 64%, rgba(112,5,26,1) 69%, rgba(143,6,19,1) 74%, rgba(173,10,23,1) 79%, rgba(205,26,36,1) 85%, rgba(236,60,67,1) 90%, rgba(249,141,146,1) 100%);
+}
+
+.order-animation .order-item {
+  opacity: 0;
+  animation: show-text;
+  animation-duration: 1s;
+  animation-fill-mode: backwards;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.order-item.order-first { animation-delay: 0s; }
+.order-item.order-second { animation-delay: 1s; }
+.order-item.order-third { animation-delay: 2s; }
+.order-item.order-fourth { animation-delay: 3s; }
+
+@keyframes show-text {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

@@ -1,10 +1,12 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+// import { Inter } from 'next/font/google'
 import ThemeRegistry from './ThemeRegistry'
 import '@fontsource/public-sans';
+import cx from 'classnames';
 
-const inter = Inter({ subsets: ['latin'] })
+// const inter = Inter({ subsets: ['latin'] })
+const inter = { className: "" }
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -18,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className + " max-w-screen overflow-x-hidden"}>
+      <body className={cx("max-w-screen overflow-x-hidden", inter.className)}>
         <ThemeRegistry options={{ key: 'mui' }}>{children}</ThemeRegistry>
       </body>
     </html>
