@@ -1,6 +1,6 @@
 "use client"
 
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { Question } from '@/interfaces/data';
 import { useActiveQuestionVotes } from '@/utilities/useActiveQuestion';
 import useQRCode from '@/utilities/useQRCode';

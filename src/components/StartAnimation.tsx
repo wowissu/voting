@@ -1,24 +1,28 @@
+import { getSessionAQI, removeSessionAQI, setSesscionAQI } from '@/utilities/useActiveQuestionIndex';
 import { FC, useEffect, useState } from 'react';
 
-
 export const StartAnimation: FC<{index: number, onChange?(b: boolean): void}> = (props) => {
-  const {index} = props;
+  const {index, onChange} = props;
   const [showStart, setShowStart] = useState(false);
 
   useEffect(() => {
-    const sessionActiveQuestionIndex = parseInt(sessionStorage.getItem("previous_active_question") ?? "");
+    const sessionActiveQuestionIndex = getSessionAQI();
 
     if (index !== sessionActiveQuestionIndex) {
       setShowStart(true);
-      sessionStorage.setItem("previous_active_question", index.toString());
-      props.onChange?.(true);
-    }
-    
-    setTimeout(() => {
-      setShowStart(false);
-      props.onChange?.(false);
-    }, 4000)
+      setSesscionAQI(index);
+      onChange?.(true);
 
+      setTimeout(() => {
+        setShowStart(false);
+        onChange?.(false);
+      }, 4000)
+    }
+
+    return () => {
+      console.log('remove AQI')
+      removeSessionAQI();
+    }
   }, [index])
 
   return (
