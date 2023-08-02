@@ -23,7 +23,7 @@ const VotingPage: FC<{ question: Question, activeQuestionIndex: number, votingKe
               {props.question.leftLabel}
             </div>
             <div>
-              <div className="border-2 rounded-full w-[max(25vw,100px)] aspect-square p-4">
+              <div className="border-2 rounded-full w-[max(25vw,100px)] h-[max(25vw,100px)] p-4">
                 {will === 1 && (<div className="w-full h-full bg-white rounded-full"></div>)}
               </div>
             </div>
@@ -33,7 +33,7 @@ const VotingPage: FC<{ question: Question, activeQuestionIndex: number, votingKe
               {props.question.rightLabel}
             </div>
             <div>
-              <div className="border-2 rounded-full w-[max(25vw,100px)] aspect-square p-4">
+              <div className="border-2 rounded-full w-[max(25vw,100px)] h-[max(25vw,100px)] p-4">
                 {will === 2 && (<div className="w-full h-full bg-white rounded-full"></div>)}
               </div>
             </div>
