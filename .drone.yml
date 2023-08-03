@@ -2,19 +2,10 @@ kind: pipeline
 type: docker
 name: default
 
+clone:
+  disable: true
+
 steps:
-# - name: npm-build
-#   privileged: true
-#   image: node:18-alpine
-#   volumes:
-#   - name: voting
-#     path: /drone/src/node_modules
-#   commands: 
-#     - npm install
-#     - npm run build
-#     - mv .next/static .next/standalone
-#     - ls -la .next/standalone
-#     - du -sh .next/standalone
 - name: trigger-remote-command
   image: docker
   volumes:
@@ -22,15 +13,11 @@ steps:
     path: /drone/.ssh
   commands: 
     - ssh -p 22220 -i /drone/.ssh/id_rsa -F /drone/.ssh/ssh_config opt@172.105.217.99 '/home/opt/build.sh;/home/opt/start.sh;exit;'
-    # - ssh -p 22220 -i /drone/.ssh/id_rsa -F /drone/.ssh/ssh_config opt@172.105.217.99 '/home/opt/start.sh;exit;'
   when: 
     branch: 
     - main
 
 volumes:
-# - name: voting
-#   host:
-#     path: /volume1/docker/voting/node_modules
 - name: ssh
   host:
     path: /volume1/docker/voting/ssh
