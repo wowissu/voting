@@ -10,7 +10,7 @@ import { StartAnimation } from '@/components/StartAnimation';
 
 const VotingPage: FC<{ question: Question, activeQuestionIndex: number, votingKey: string }> = (props) => {
   const {voting, will} = useBeVoter(props.votingKey);
-
+  
   return (
     <>
       <div className='h-[100dvh] flex flex-col items-stretch bg-white text-black'>

@@ -1,11 +1,12 @@
 'use client';
-import { ChangeEventHandler, FC, FormEventHandler, useState } from 'react';
+import { ChangeEventHandler, FC, FormEventHandler, Fragment, useMemo, useState } from 'react';
 import api from '@/utilities/api';
 import { Box, Button, Modal, Paper, Skeleton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material';
 import { useVotingUrl } from '@/utilities/useVoting';
 import { useDebounce } from 'usehooks-ts';
 import { useQuestions } from '@/utilities/useQuestion';
 import { resolveUrl } from '@/utilities/resolveUrl';
+import { Question } from '@/interfaces/data';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -134,7 +135,7 @@ const AdminPage: FC = () => {
   const [{ questions, activeQuestionIndex }, { mutate: reloadList, isLoading }] = useQuestions();
   const [ votingUrl, votingContext ] = useVotingUrl()
   const debouncedIsLoading = useDebounce(isLoading, 1000);
-  const [openModal, setOpenModal] = useState(false);
+  const [gonnaRemoveIndex, setGonnaRemoveIndex] = useState<number>();
 
   async function removeQuestion(qIndex: number) {
     const res = await api.removeQuestion(qIndex)()
@@ -196,56 +197,55 @@ const AdminPage: FC = () => {
                 </TableHead>
                 <TableBody>
                   {questions?.map((row, index) => (
-                    <>
+                    <Fragment key={`question_${index}`}>
                       <TableRow
-                        key={index}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                       >
-                        <TableCell component="th" align="left" rowSpan={row.votes.length + 1}>
+                        <TableCell component="th" align="left">
                           <div className="space-x-4">
                             {activeQuestionIndex === null ? (<Button variant='contained' onClick={() => setActiveQuestion(index)}>開始</Button>) : null}
                             {activeQuestionIndex === index ? (<Button variant='contained' color="warning" onClick={() => removeActiveQuestion(index)}>結束</Button>) : null}
                           </div>
                         </TableCell>
-                        <TableCell component="th" scope="row" rowSpan={row.votes.length + 1}> {index + 1} </TableCell>
-                        <TableCell component="th" scope="row" rowSpan={row.votes.length + 1}> {row.questionLabel} </TableCell>
+                        <TableCell component="th" scope="row"> {index + 1} </TableCell>
+                        <TableCell component="th" scope="row"> {row.questionLabel} </TableCell>
                         <TableCell align="right" className="bg-blue-800">{row.leftLabel}</TableCell>
                         <TableCell align="right" className="bg-red-800">{row.rightLabel}</TableCell>
-                        
-                          {activeQuestionIndex === null && (
-                            <TableCell align="right" rowSpan={row.votes.length + 1}>
-                              <div className="space-x-4">
-                                <Button variant='contained' color="error" onClick={() => setOpenModal(true)}>刪除</Button>
-                                <Modal
-                                  open={openModal}
-                                  onClose={() => setOpenModal(false)}
-                                  aria-labelledby="modal-modal-title"
-                                  aria-describedby="modal-modal-description"
-                                >
-                                  <Box sx={style} className="space-y-4">
-                                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                                      確定要刪除 `{row.questionLabel}` 嗎？
-                                    </Typography>
-                                    <Button variant='contained' color="error" onClick={() => removeQuestion(index)}>確定刪除</Button>
-                                  </Box>
-                                </Modal>
-                              </div>
-                            </TableCell>
-                          )}
+                        <TableCell align="right">
+                          <div className="space-x-4">
+                            <Button disabled={activeQuestionIndex !== null} variant='contained' color="error" onClick={() => setGonnaRemoveIndex(index)}>刪除</Button>
+                            {gonnaRemoveIndex === index && (
+                              <Modal
+                                open={true}
+                                onClose={() => setGonnaRemoveIndex(undefined)}
+                                aria-labelledby="modal-modal-title"
+                                aria-describedby="modal-modal-description"
+                              >
+                                <Box sx={style} className="space-y-4">
+                                  <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    確定要刪除 `{row.questionLabel}` 嗎？
+                                  </Typography>
+                                  <Button variant='contained' color="error" onClick={() => removeQuestion(index)}>確定刪除</Button>
+                                </Box>
+                              </Modal>
+                            )}
+                          </div>
+                        </TableCell>
                       </TableRow>
                       {row.votes.map(([leftVotes, rightVotes], voteIndex) => {
                         return (
                           <TableRow
-                            key={voteIndex}
+                            key={`vote_${voteIndex}`}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                           >
-                            {/* <TableCell component="th" align="right"></TableCell> */}
+                            <TableCell colSpan={3}>第 {voteIndex + 1} 回</TableCell>
                             <TableCell align="right">{leftVotes}</TableCell>
                             <TableCell align="right">{rightVotes}</TableCell>
+                            <TableCell></TableCell>
                           </TableRow>
                         )
                       })}
-                    </>
+                    </Fragment>
                   ))}
                 </TableBody>
               </Table>
