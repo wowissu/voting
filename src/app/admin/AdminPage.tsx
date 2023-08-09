@@ -136,6 +136,8 @@ const AdminPage: FC = () => {
   const [ votingUrl, votingContext ] = useVotingUrl()
   const debouncedIsLoading = useDebounce(isLoading, 1000);
   const [gonnaRemoveIndex, setGonnaRemoveIndex] = useState<number>();
+  const [confirmRefreshVotingModal, setConfirmRefreshVotingModal] = useState(false);
+  const [confirmRefreshedVotingModal, setConfirmRefreshedVotingModal] = useState(false);
 
   async function removeQuestion(qIndex: number) {
     const res = await api.removeQuestion(qIndex)()
@@ -143,6 +145,8 @@ const AdminPage: FC = () => {
     if (res.success === true) {
       reloadList();
     }
+
+    setGonnaRemoveIndex(undefined);    
   }
 
   async function setActiveQuestion(qIndex: number) {
@@ -160,6 +164,12 @@ const AdminPage: FC = () => {
       reloadList();
     }
   }
+
+  async function refreshAndCloseModal() {
+    await votingContext.refresh()
+    setConfirmRefreshVotingModal(false)
+    setConfirmRefreshedVotingModal(true)
+  }
   
   return (
     <div className="w-screen h-screen flex justify-center p-8">
@@ -172,7 +182,42 @@ const AdminPage: FC = () => {
                 <Button variant="contained" color="secondary" href={votingUrl} target="_blank">投注頁面</Button>
               </div>
               <div>
-              <Button variant="contained" color="error" onClick={() => votingContext.refresh()} >刷新 Voting token key</Button>
+                <Button variant="contained" color="error" onClick={() => setConfirmRefreshVotingModal(true)}>刷新投票連結</Button>
+                <Modal
+                  open={confirmRefreshVotingModal}
+                  onClose={() => setConfirmRefreshVotingModal(false)}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                >
+                  <Box sx={style} className="space-y-4">
+                    <Typography id="modal-modal-title">
+                      <div className='space-y-4'>  
+                        <div className="">
+                          刷新投票連結，舊連結將無法進行投票，需重新掃描 QRCode 以取得最新投票連結<br />
+                        </div>
+                        <div className='text-lg font-bold'>
+                          確定要更新嗎？
+                        </div>
+                      </div>
+                    </Typography>
+                    <Button variant='contained' color="error" onClick={() => refreshAndCloseModal()}>確定更新</Button>
+                  </Box>
+                </Modal>
+                <Modal
+                  open={confirmRefreshedVotingModal}
+                  onClose={() => setConfirmRefreshedVotingModal(false)}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                >
+                  <Box sx={style} className="space-y-4">
+                    <Typography id="modal-modal-title">
+                      <div className='space-y-4'>  
+                        連結已被更新為 <a className="text-blue-600 cursor-pointer" target="_blank" href={votingUrl}>{votingUrl}</a>
+                      </div>
+                    </Typography>
+                    <Button variant='contained' color="primary" onClick={() => setConfirmRefreshedVotingModal(false)}>確定</Button>
+                  </Box>
+                </Modal>
               </div>
             </div>
             <hr />

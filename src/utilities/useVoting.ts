@@ -19,5 +19,5 @@ export function useVotingUrl() {
     }
   }
 
-return [votingUrl, {...ctx, refresh}] as const;
+return [votingUrl, {...ctx, refresh, votingKey: votingKeyData?.data}] as const;
 }
