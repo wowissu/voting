@@ -1,4 +1,4 @@
-import { getSessionAQI, removeSessionAQI, setSesscionAQI } from '@/utilities/useActiveQuestionIndex';
+import { getSessionAQI, removeSessionAQI, setSessionAQI } from '@/utilities/useActiveQuestionIndex';
 import { FC, useEffect, useState } from 'react';
 
 export const StartAnimation: FC<{index: number, onChange?(b: boolean): void}> = (props) => {
@@ -10,7 +10,7 @@ export const StartAnimation: FC<{index: number, onChange?(b: boolean): void}> = 
 
     if (index !== sessionActiveQuestionIndex) {
       setShowStart(true);
-      setSesscionAQI(index);
+      setSessionAQI(index);
       onChange?.(true);
 
       setTimeout(() => {

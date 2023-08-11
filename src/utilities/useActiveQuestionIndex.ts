@@ -4,7 +4,7 @@ const key = "previous_active_question";
 
 // AQI = Action Question Index
 
-export function setSesscionAQI(index: number) {
+export function setSessionAQI(index: number) {
   if (!isNaN(index)) {
     sessionStorage.setItem(key, index.toString());
   }

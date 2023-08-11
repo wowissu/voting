@@ -18,9 +18,9 @@ export function updateVotingPublicKey() {
 }
 
 export function genVoterToken() {
-  const exp = Math.floor(Date.now() / 1000) + (60 * 60 * votingHours);
+  // const exp = Math.floor(Date.now() / 1000) + (60 * 60 * votingHours);
   const uuid = randomUUID();
-  const token = jwt.sign({ exp, uuid }, votingPublicKey);
+  const token = jwt.sign({ uuid }, votingPublicKey);
 
   return token
 }
