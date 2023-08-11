@@ -2,8 +2,7 @@ import { genVoterToken, verifyVoterToken, verifyVotingTokenRequestGuard, votingP
 import { NextResponse as res } from 'next/server';
 
 export async function POST(req: Request) {
-
-  const {votingKey} = await req.json();
+  const { votingKey } = await req.json();
 
   try {
     // can not be a voter if votingKey is not given.

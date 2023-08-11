@@ -1,11 +1,12 @@
 import { VotingWill } from '@/interfaces/data';
 import jwt from "jsonwebtoken";
 import { getQuestionByIndex } from './data-server';
+import { randomUUID } from 'crypto';
 
 type QuestionIndex = number;
 type VotingToken = string;
 
-const votingHours = 3;
+const votingHours = 5;
 const votingPool: Record<QuestionIndex, Map<VotingToken, { token: VotingToken, will: Omit<VotingWill, 1 | 2> }>> = {};
 
 export let votingPublicKey = process.env.NODE_ENV === 'production' ? randomKey() : "w2yq4";
@@ -18,7 +19,8 @@ export function updateVotingPublicKey() {
 
 export function genVoterToken() {
   const exp = Math.floor(Date.now() / 1000) + (60 * 60 * votingHours);
-  const token = jwt.sign({ exp }, votingPublicKey);
+  const uuid = randomUUID();
+  const token = jwt.sign({ exp, uuid }, votingPublicKey);
 
   return token
 }
