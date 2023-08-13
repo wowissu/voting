@@ -2,6 +2,7 @@ import useSWR, { SWRConfiguration } from 'swr'
 import { fetchWithToken, fetcher } from './api';
 import { Question } from '@/interfaces/data';
 import { resolveUrl } from './resolveUrl';
+import { useEffect, useState } from 'react';
 
 export function useActiveQuestion (config?: SWRConfiguration) {
   const key = "getActiveQuestion";
@@ -16,11 +17,28 @@ export function useActiveQuestion (config?: SWRConfiguration) {
 export function useActiveQuestionVotes (config?: SWRConfiguration) {
   const key = "useActiveQuestionVotes";
   const context = useSWR(key, fetchWithToken<{ currentLeftVotes: number, currentRightVotes: number, question: Question, activeQuestionIndex: number }>(resolveUrl("/api/questions/active/votes")), config);  
-  
+
+  // const [currentLeftVotes, setcurrentLeftVotes] = useState(0);
+  // const [currentRightVotes, setcurrentRightVotes] = useState(0);
+  // useEffect(() => {
+  //   const t = setTimeout(() => {
+  //     setcurrentLeftVotes(getRandomInt(200))
+  //     setcurrentRightVotes(getRandomInt(300))
+  //   }, 500)
+
+  //   return () => {
+  //     clearTimeout(t);
+  //   }
+  // });
+
   const currentLeftVotes = context.data?.data?.currentLeftVotes ?? 0
   const currentRightVotes = context.data?.data?.currentRightVotes ?? 0
   const question = context.data?.data?.question
   const activeQuestionIndex = context.data?.data?.activeQuestionIndex
   
   return [{currentLeftVotes, currentRightVotes, question, activeQuestionIndex}, context] as const
+}
+
+function getRandomInt(max: number) {
+  return Math.floor(Math.random() * max);
 }

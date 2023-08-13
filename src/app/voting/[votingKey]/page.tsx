@@ -14,7 +14,7 @@ const VotingPage: FC<{ question: Question, activeQuestionIndex: number, votingKe
   return (
     <>
       <div className='h-[100dvh] flex flex-col items-stretch bg-white text-black'>
-        <div className="text-[max(6vw,6vh)] px-4 text-center font-bold">
+        <div className="text-[min(6vw,10vh)] px-4 text-center font-black">
           {props.question.questionLabel}
         </div>
         <div className="flex flex-nowrap w-full flex-1 relative voting-background">
@@ -38,7 +38,7 @@ const VotingPage: FC<{ question: Question, activeQuestionIndex: number, votingKe
               </div>
             </div>
           </div>
-          <div className='absolute text-white text-[max(3vw,2vh)] font-bold left-1/2 -translate-x-1/2 bottom-0'>
+          <div className='absolute text-white text-[max(3vw,2vh)] font-bold left-1/2 -translate-x-1/2 bottom-[5vh]'>
             ROUND {props.activeQuestionIndex + 1}
           </div>
         </div>
@@ -49,7 +49,7 @@ const VotingPage: FC<{ question: Question, activeQuestionIndex: number, votingKe
 }
 
 export default function Page({ params }: { params: { votingKey: string } }) {
-  const [{ question, activeQuestionIndex, votingKey }, { isLoading }] = useActiveQuestion({ refreshInterval: 1000 });
+  const [{ question, activeQuestionIndex, votingKey }] = useActiveQuestion({ refreshInterval: 900 });
   const isActiveQuestion = votingKey === params.votingKey;
 
   return (

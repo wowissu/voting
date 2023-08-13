@@ -49,13 +49,13 @@ const QuestionPage: FC<{
   const currentLeftWidth = (total === 0 ? 0.5 : currentLeftVotes / total) * 100;
   const currentRightWidth = (total === 0 ? 0.5 : currentRightVotes / total) * 100;
 
-  const { value: currentLeftVotesEasing } = useEasing<number>({ end: currentLeftVotes, start: previousLeftVotes, duration: 1, formatFn: (n) => Math.floor(n) });  
-  const { value: currentRightVotesEasing } = useEasing<number>({ end: currentRightVotes, start: previousRightVotes, duration: 1, formatFn: (n) => Math.floor(n) });  
+  const { value: currentLeftVotesEasing } = useEasing<number>({ end: currentLeftVotes, start: previousLeftVotes, duration: 0.2, formatFn: (n) => Math.floor(n) });  
+  const { value: currentRightVotesEasing } = useEasing<number>({ end: currentRightVotes, start: previousRightVotes, duration: 0.2, formatFn: (n) => Math.floor(n) });  
 
   return (
     <>
       <div className='h-[100dvh] flex flex-col items-stretch bg-white text-black'>
-        <div className="text-[max(6vw,6vh)] px-4 text-center font-bold">
+        <div className="text-[max(6vw,6vh)] px-4 text-center font-black">
           {question?.questionLabel}
         </div>
 
@@ -70,13 +70,13 @@ const QuestionPage: FC<{
           </div>
           <div className="p-4">  
             <div className="h-[min(10vh,10vw)] border-4 rounded-[5vh] border-white w-11/12 mx-auto relative flex flex-nowrap">
-              <div className="top-0 transition-all duration-700 h-full bg-red-700 left-0 rounded-s-[5vh]" style={{ width: `${currentLeftWidth}%` }}></div>
+              <div className="top-0 transition-all duration-200 h-full bg-red-700 left-0 rounded-s-[5vh]" style={{ width: `${currentLeftWidth}%` }}></div>
               <div className="w-0 relative">
                 <div className="absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[calc(min(10vh,10vw)+2rem)] aspect-square rounded-full overflow-hidden">
                   <img src={Logo.src} alt="" />
                 </div>
               </div>
-              <div className="top-0 transition-all duration-700 h-full bg-blue-700 right-0 rounded-e-[5vh]" style={{ width: `${currentRightWidth}%` }}></div>
+              <div className="top-0 transition-all duration-200 h-full bg-blue-700 right-0 rounded-e-[5vh]" style={{ width: `${currentRightWidth}%` }}></div>
             </div>
           </div>
           <div className="flex flex-nowrap text-[min(16vw,16vh)] font-bold text-white font-Impact">
@@ -100,16 +100,14 @@ const QuestionPage: FC<{
 }
 
 export default function Page() {
-  const [{ currentLeftVotes, currentRightVotes, question, activeQuestionIndex }, { isLoading }] = useActiveQuestionVotes({ refreshInterval: 500 });
+  const [{ currentLeftVotes, currentRightVotes, question, activeQuestionIndex }, { isLoading }] = useActiveQuestionVotes({ refreshInterval: 200 });
 
   return (
-    <>
-      <div >
-        {isLoading ? <WaitingForStart /> : 
-        (question && (activeQuestionIndex !== undefined) 
-          ? <QuestionPage currentLeftVotes={currentLeftVotes} currentRightVotes={currentRightVotes} question={question} activeQuestionIndex={activeQuestionIndex} /> 
-          : <QRcodePage />)}
-      </div>
-    </>
+    <div >
+      {isLoading ? <WaitingForStart /> : 
+      (question && (activeQuestionIndex !== undefined) 
+        ? <QuestionPage currentLeftVotes={currentLeftVotes} currentRightVotes={currentRightVotes} question={question} activeQuestionIndex={activeQuestionIndex} /> 
+        : <QRcodePage />)}
+    </div>
   )
 }
