@@ -12,7 +12,7 @@ steps:
   - name: ssh
     path: /drone/.ssh
   commands: 
-    - ssh -p 22220 -i /drone/.ssh/id_rsa -F /drone/.ssh/ssh_config opt@172.105.217.99 '/home/opt/download.sh;/home/opt/voting/start.sh;exit;'
+    - ssh -p 22220 -i /drone/.ssh/id_rsa -F /drone/.ssh/ssh_config opt@172.105.217.99 '/home/opt/download.sh;/home/opt/voting/build.sh;/home/opt/voting/start.sh;exit;'
   when: 
     branch: 
     - main
