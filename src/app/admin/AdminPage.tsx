@@ -1,12 +1,11 @@
 'use client';
-import { ChangeEventHandler, FC, FormEventHandler, Fragment, useMemo, useState } from 'react';
+import { ChangeEventHandler, FC, FormEventHandler, Fragment, useState } from 'react';
 import api from '@/utilities/api';
 import { Box, Button, Modal, Paper, Skeleton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material';
 import { useVotingUrl } from '@/utilities/useVoting';
 import { useDebounce } from 'usehooks-ts';
 import { useQuestions } from '@/utilities/useQuestion';
 import { resolveUrl } from '@/utilities/resolveUrl';
-import { Question } from '@/interfaces/data';
 
 const style = {
   position: 'absolute' as 'absolute',

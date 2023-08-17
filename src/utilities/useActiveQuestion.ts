@@ -2,7 +2,6 @@ import useSWR, { SWRConfiguration } from 'swr'
 import { fetchWithToken, fetcher } from './api';
 import { Question } from '@/interfaces/data';
 import { resolveUrl } from './resolveUrl';
-import { useEffect, useState } from 'react';
 
 export function useActiveQuestion (config?: SWRConfiguration) {
   const key = "getActiveQuestion";

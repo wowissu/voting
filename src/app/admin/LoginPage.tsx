@@ -4,8 +4,9 @@ import { setLoginToken } from '@/utilities/token-client';
 import { Box, Button, TextField } from '@mui/material'
 import { ChangeEventHandler, FC, FormEventHandler, useCallback, useState } from 'react'
 
+
 const LoginPage: FC = () => {
-  const [passwordInput, setPasswordInput] = useState("")
+  const [passwordInput, setPasswordInput] = useState(process.env.ADMIN_PASSWORD)
   
   const doLogin = useCallback<FormEventHandler<HTMLFormElement>>(async (e) => {
     e.stopPropagation();
