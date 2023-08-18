@@ -5,7 +5,6 @@ import { getVotingPublicKey } from '@/utilities/voting-server';
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  // keep this sentence to prevent to be treated like static function
   const activeQuestionIndex = getActiveQuestionIndex();
   const question = getActiveQuestion();
   const votingKey = getVotingPublicKey();

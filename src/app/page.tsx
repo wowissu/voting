@@ -60,11 +60,11 @@ const QuestionPage: FC<{
         </div>
 
         <div className="flex flex-col justify-evenly w-full flex-1 relative voting-background overflow-hidden">
-          <div className="flex flex-nowrap text-[max(8vw,4vh)] font-bold text-white">
-            <div className="flex-1 basis-1/2 flex items-center justify-center">
+          <div className="flex flex-nowrap text-[max(6vw,4vh)] font-bold text-white">
+            <div className="flex-1 basis-1/2 flex items-center justify-center text-center">
               {question?.leftLabel}
             </div>
-            <div className="flex-1 basis-1/2 flex items-center justify-center">
+            <div className="flex-1 basis-1/2 flex items-center justify-center text-center">
               {question?.rightLabel}
             </div>
           </div>
