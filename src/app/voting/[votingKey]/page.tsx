@@ -19,7 +19,7 @@ const VotingPage: FC<{ question: Question, activeQuestionIndex: number, votingKe
         </div>
         <div className="flex flex-nowrap w-full flex-1 relative voting-background">
           <div className="flex-1 flex-shrink-0 basic-1/2 flex flex-col justify-center space-y-4 items-center cursor-pointer" onClick={() => voting(props.activeQuestionIndex, 1)}>
-            <div className="text-[min(8vw,4vh)] font-bold text-white text-center">
+            <div className="text-[min(8vw,6vh)] font-bold text-white text-center">
               {props.question.leftLabel}
             </div>
             <div>
@@ -29,7 +29,7 @@ const VotingPage: FC<{ question: Question, activeQuestionIndex: number, votingKe
             </div>
           </div>
           <div className="flex-1 flex-shrink-0 basic-1/2 flex flex-col justify-center space-y-4 items-center cursor-pointer" onClick={() => voting(props.activeQuestionIndex, 2)}>
-            <div className="text-[min(8vw,4vh)] font-bold text-white text-center">
+            <div className="text-[min(8vw,6vh)] font-bold text-white text-center">
               {props.question.rightLabel}
             </div>
             <div>
